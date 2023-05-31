@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "my-school"
+version = "0.1.0"
+description = "School Management System"
+authors = ["alkenes <belloabdulhakeemolamide@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "my_school"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pre-commit = "^3.3.2"
+django = "^4.2.1"
+pytest-django = "^4.5.2"
+python-decouple = "^3.8"
+djangorestframework = "^3.14.0"
+celery = "^5.2.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
