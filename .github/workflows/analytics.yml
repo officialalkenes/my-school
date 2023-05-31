@@ -22,7 +22,7 @@ jobs:
           python-version: 3.9
 
       - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
+        run: pip install poetry
 
       - name: Install dependencies
         run: poetry install
@@ -46,7 +46,7 @@ jobs:
           python-version: 3.9
 
       - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
+        run: pip install poetry
 
       - name: Install dependencies
         run: poetry install
@@ -68,7 +68,7 @@ jobs:
           python-version: 3.x
 
       - name: Install Poetry
-        run: curl -sSL https://install.python-poetry.org | python3 -
+        run: pip install poetry
           # env:
           #   POETRY_HOME: ${{ env.HOME }}/.poetry
           #   POETRY_VIRTUALENVS_IN_PROJECT: true
