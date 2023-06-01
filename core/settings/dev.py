@@ -1,14 +1,15 @@
-from base import *
+from .base import *
 
+DEBUG = config("DEBUG", cast=bool)
+# Example development-specific setting
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
-DEBUG = True
 
 DATABASES["default"].update(
-    {
-        "HOST": "localhost",
-        "PORT": "5432",
-        "OPTIONS": {
-            "options": "-c search_path=dev",
-        },
+    DATABASES={
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
 )

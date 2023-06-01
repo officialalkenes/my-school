@@ -1,13 +1,13 @@
-# project/settings/__init__.py
-
-import os
+from decouple import config
 
 # Import the appropriate settings file based on the current environment
-if os.getenv("DJANGO_ENV") == "dev":
+ENVIRONMENT = config("ENVIRONMENT")
+
+if ENVIRONMENT == "dev":
     from .dev import *
-elif os.getenv("DJANGO_ENV") == "staging":
-    from .staging import *
-elif os.getenv("DJANGO_ENV") == "prod":
+elif ENVIRONMENT == "prod":
     from .prod import *
+elif ENVIRONMENT == "staging":
+    from .staging import *
 else:
-    from .docker import *
+    raise ValueError("Invalid environment specified.")

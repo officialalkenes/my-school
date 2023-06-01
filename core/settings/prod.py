@@ -1,9 +1,7 @@
-# project/settings/production.py
-
 from .base import *
 
-# Production-specific settings
-DEBUG = config("DEBUG", cast=bool)
+# Example production-specific setting
+ALLOWED_HOSTS = ["example.com"]
 
 # Production database configuration
 DATABASES["default"].update(
@@ -15,6 +13,3 @@ DATABASES["default"].update(
         },
     }
 )
-
-# Other production-specific settings
-# ...

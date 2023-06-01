@@ -3,7 +3,7 @@
 from .base import *
 
 # Staging-specific settings
-DEBUG = False
+DEBUG = True
 
 # Staging database configuration
 DATABASES["default"].update(
