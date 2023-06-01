@@ -1,4 +1,4 @@
-name: School Management System
+name: School Management Continious Integration
 
 on:
   push:
@@ -19,19 +19,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
-
-      - name: Install Poetry
-        run: pip install poetry
+          python-version: 3.10
 
       - name: Install dependencies
-        run: poetry install
+        run: pip install -r requirements.in
 
       - name: Run flake8
-        run: poetry run flake8 --exclude migrations .
+        run: flake8 --exclude migrations .
 
       - name: Run black (check only)
-        run: poetry run black --check .
+        run: black --check .
 
   format:
     runs-on: ubuntu-latest
@@ -43,38 +40,48 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
-
-      - name: Install Poetry
-        run: pip install poetry
-
-      - name: Install dependencies
-        run: poetry install
-
-      - name: Run black (formatting)
-        run: poetry run black .
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
           python-version: 3.10
 
-      - name: Install Poetry
-        run: pip install poetry
-          # env:
-          #   POETRY_HOME: ${{ env.HOME }}/.poetry
-          #   POETRY_VIRTUALENVS_IN_PROJECT: true
-
       - name: Install dependencies
-        run: poetry install
+        run: pip install -r requirements.in
 
-      - name: Run tests
-        run: poetry run python manage.py test
+      - name: Run black (formatting)
+        run: black .
+
+
+  # deploy:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
+
+    # Add deployment steps here (e.g., deploy to staging/production server)
+
+  # notifications:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
+
+  #   - name: Install additional dependencies
+  #     run: pip install -r requirements.txt
+
+  #   - name: Send Slack notification on failure
+  #     if: ${{ failure() }}
+  #     uses: rtCamp/action-slack-notify@v2
+  #     with:
+  #       status: failure
+  #       slack_webhook: ${{ secrets.SLACK_WEBHOOK }}
+  #       channel: ${{ secrets.SLACK_CHANNEL }}
+  #       text: 'Tests failed for the Django project.'
+
+  #   - name: Create GitHub issue on failure
+  #     if: ${{ failure() }}
+  #     uses: peter-evans/create-issue-from-file@v2
+  #     with:
+  #       title: 'Tests failed for the Merge of the Pull Request'
+  #       content-filepath: ./issue-template.md
