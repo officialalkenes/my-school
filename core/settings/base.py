@@ -23,12 +23,15 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    "apps.user",
+]
 
 THIRDPARTY_APPS = [
+    "drf_yasg",
+    "djoser",
     "rest_framework",
     "rest_framework_simplejwt",
-    "drf_yasg",
     "corsheaders",
 ]
 
