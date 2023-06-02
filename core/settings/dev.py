@@ -1,6 +1,5 @@
 from .base import *
 
-DEBUG = config("DEBUG", cast=bool)
 # Example development-specific setting
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
