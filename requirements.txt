@@ -281,6 +281,8 @@ pathspec==0.11.1
     # via
     #   -r requirements.in
     #   black
+pillow==9.5.0
+    # via -r requirements.in
 pip-tools==6.13.0
     # via -r requirements.in
 platformdirs==3.5.1

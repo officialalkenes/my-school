@@ -1,0 +1,22 @@
+scripts:
+  startup:
+    - pip install pip-tools && pip install pre-commit
+
+  server: python manage.py runserver
+  delete-migrate: find apps -name "migrations" -type d -exec rm -r {} \;
+  copy-migrate: mkdir migrations && cd migrations && touch __init__.py
+  add-migrate: find /apps -name "apps" -type d -exec mkdir migrations -r {} \
+
+  migrations:
+    - python manage.py makemigrations
+    - python manage.py migrate
+
+  delete-migrations:
+    description: Delete migrations folder and its contents in the "apps" directory
+    run: find apps -name "migrations" -type d -exec rm -r {} \;
+
+  celery: celery -A core.celery worker --pool=solo -l info
+
+  packager:
+    - pip freeze > requirements.in
+    - pip-compile requirements.in -o requirements.txt

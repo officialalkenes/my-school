@@ -10,7 +10,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
 from apps.school.validators import validate_alphabetical
-from apps.tenants.models import SchoolOwner
 
 
 User = get_user_model()
@@ -283,24 +282,24 @@ class Level(models.Model):
     )
     slug = models.SlugField(max_length=60, blank=True)
 
-    form_teacher = models.ForeignKey(
-        to="staff.Staff",
-        on_delete=models.CASCADE,
-        related_name="+",
-        null=True,
-        blank=True,
-        verbose_name=_("Form Teacher"),
-        help_text=_("Form Teacher -> Primary 3 Class Teacher"),
-    )
-    ass_form_teacher = models.ForeignKey(
-        to="staff.Staff",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="+",
-        verbose_name=_("Assistant Form Teacher"),
-        help_text=_("Assistant Form Teacher -> Primary 3 Assistant Class Teacher"),
-    )
+    # form_teacher = models.ForeignKey(
+    #     to="staff.Staff",
+    #     on_delete=models.CASCADE,
+    #     related_name="+",
+    #     null=True,
+    #     blank=True,
+    #     verbose_name=_("Form Teacher"),
+    #     help_text=_("Form Teacher -> Primary 3 Class Teacher"),
+    # )
+    # ass_form_teacher = models.ForeignKey(
+    #     to="staff.Staff",
+    #     on_delete=models.CASCADE,
+    #     blank=True,
+    #     null=True,
+    #     related_name="+",
+    #     verbose_name=_("Assistant Form Teacher"),
+    #     help_text=_("Assistant Form Teacher -> Primary 3 Assistant Class Teacher"),
+    # )
 
     def __str__(self) -> str:
         return f"{self.school} - {self.short_name}"
@@ -434,4 +433,4 @@ class SchoolSummerClass(models.Model):
     end_date = models.DateField()
 
     def __str__(self) -> str:
-        return f"{self.session__school} - {self.start_date} - {self.end_date}"
+        return f"{self.session__school} from {self.start_date} to {self.end_date}"
