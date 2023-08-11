@@ -276,7 +276,6 @@ class Level(models.Model):
         help_text=_("Levels: Primary One"),
         validators=[validate_alphabetical],
     )
-
     short_name = models.CharField(
         max_length=40, verbose_name=_("Level Short name"), help_text=_("Levels: Pry1")
     )

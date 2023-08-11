@@ -1,4 +1,4 @@
-# import os
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -179,3 +179,6 @@ DJOSER = {
         "user_delete": "djoser.serializers.UserDeleteSerializer",
     },
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
