@@ -3,6 +3,9 @@ from .base import *
 # Example development-specific setting
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
+# DATABASE_ROUTERS = (
+#     'django_tenants.routers.TenantSyncRouter',
+# )
 
 DATABASES["default"].update(
     DATABASES={
