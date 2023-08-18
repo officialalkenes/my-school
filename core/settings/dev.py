@@ -15,8 +15,8 @@ DATABASES["default"].update(
             "NAME": config("NAME"),
             "USER": config("USER"),
             "PASSWORD": config("PASSWORD"),
-        }
-    }
+        },
+    },
 )
 
 
