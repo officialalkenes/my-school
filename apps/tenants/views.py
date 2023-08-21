@@ -1,5 +1,11 @@
+from django.db import connection
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
+from django.core.management import call_command
+from django.http import JsonResponse
+from django.views.generic import View
 from django_tenants.utils import get_tenant_model, schema_context
 from rest_framework import status, response, views, permissions
 from apps.school.models import School
@@ -33,6 +39,7 @@ class TenantCreateView(views.APIView):
         state = serializer.validated_data.get("state")
         default_email = serializer.validated_data.get("default_email")
         phone_number = serializer.validated_data.get("phone_number")
+        paid_until = serializer.validated_data.get("paid_until")
 
         # create your public tenant
         tenant = SchoolOwner(
@@ -42,6 +49,7 @@ class TenantCreateView(views.APIView):
             country=str(country),
             state=state,
             phone_number=phone_number,
+            paid_until=paid_until,
         )
         tenant.save()
 
@@ -55,25 +63,25 @@ class TenantCreateView(views.APIView):
         domain.save()
 
         # Perform any additional operations required for creating the tenant and domain
-        # with schema_context(tenant):
-        #     # Create the superuser for the tenant
-        #     user = User.objects.create_user(
-        #         email='ola@mail.com',
-        #         password=settings.ADMIN_PASSWORD,
-        #         phone_number=phone_number,
-        #     )
-        #     user.is_superuser = True
-        #     user.is_staff = True
-        #     user.user_type = 6
-        #     user.save()
-        #     school = School.objects.create(
-        #         admin=user,
-        #         name=name,
-        #         domain_name=domain_name,
-        #     )
-        #     school.save()
-        # # Switch back to the default schema
-        # connection.set_schema_to_public()
+        with schema_context(tenant):
+            # Create the superuser for the tenant
+            user = User.objects.create_user(
+                email="ola@mail.com",
+                password=settings.ADMIN_PASSWORD,
+                phone_number=phone_number,
+            )
+            user.is_superuser = True
+            user.is_staff = True
+            user.user_type = 6
+            user.save()
+            school = School.objects.create(
+                admin=user,
+                name=name,
+                domain_name=domain.domain_name,
+            )
+            school.save()
+        # Switch back to the default schema
+        connection.set_schema_to_public()
 
         return response.Response(
             {
