@@ -5,16 +5,19 @@ from django_tenants.models import TenantMixin, DomainMixin
 
 from django.utils.translation import gettext_lazy as _
 
-from phone_field import PhoneField
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class SchoolOwner(TenantMixin):
     school_name = models.CharField(max_length=100)
     name = models.CharField(
-        max_length=100, unique=True, verbose_name=_("School Short Name")
+        max_length=100,
+        unique=True,
+        verbose_name=_("School Short Name"),
+        help_text=_("Used for creating a new domain name"),
     )
     email = models.EmailField(unique=True)
-    phone_number = PhoneField()
+    phone_number = PhoneNumberField()
     country = models.CharField(max_length=20, default="Nigeria")
     state = models.CharField(max_length=100, verbose_name=_("State In Nigeria"))
     paid_until = models.DateField()
